@@ -32,6 +32,7 @@ class GraphSampler(torch.utils.data.Dataset):
             self.adj_all.append(adj)
             self.len_all.append(G.number_of_nodes())
             self.label_all.append(G.graph['label'])
+            
             # feat matrix: max_num_nodes x feat_dim
             if features == 'default':
                 f = np.zeros((self.max_num_nodes, self.feat_dim), dtype=float)

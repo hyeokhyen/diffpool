@@ -206,6 +206,7 @@ def train(dataset, model, args, same_feat=True, val_dataset=None, test_dataset=N
             assign_input = Variable(data['assign_feats'].float(), requires_grad=False).cuda()
 
             ypred = model(h0, adj, batch_num_nodes, assign_x=assign_input)
+            
             if not args.method == 'soft-assign' or not args.linkpred:
                 loss = model.loss(ypred, label)
             else:
@@ -351,9 +352,14 @@ def syn_community1v2(args, writer=None, export_graphs=False):
         print('Method: soft-assign')
         model = encoders.SoftPoolingGcnEncoder(
                 max_num_nodes, 
-                input_dim, args.hidden_dim, args.output_dim, args.num_classes, args.num_gc_layers,
+                input_dim, 
+                args.hidden_dim, 
+                args.output_dim, 
+                args.num_classes, 
+                args.num_gc_layers,
                 args.hidden_dim, assign_ratio=args.assign_ratio, num_pooling=args.num_pool,
-                bn=args.bn, linkpred=args.linkpred, assign_input_dim=assign_input_dim).cuda()
+                bn=args.bn, 
+                linkpred=args.linkpred, assign_input_dim=assign_input_dim).cuda()
     elif args.method == 'base-set2set':
         print('Method: base-set2set')
         model = encoders.GcnSet2SetEncoder(input_dim, args.hidden_dim, args.output_dim, 2,

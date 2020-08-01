@@ -2,6 +2,7 @@ import abc
 import networkx as nx
 import numpy as np
 import random
+from pprint import pprint
 
 class FeatureGen(metaclass=abc.ABCMeta):
     @abc.abstractmethod
@@ -14,6 +15,9 @@ class ConstFeatureGen(FeatureGen):
 
     def gen_node_features(self, G):
         feat_dict = {i:{'feat': self.val} for i in G.nodes()}
+        #print ('feat_dict:')
+        #pprint (feat_dict)
+        #assert False
         nx.set_node_attributes(G, feat_dict)
 
 class GaussianFeatureGen(FeatureGen):
